@@ -1,10 +1,9 @@
 CREATE TABLE authors
 (
-    id         SERIAL PRIMARY KEY,
+    id        SERIAL PRIMARY KEY,
 
-    email      TEXT UNIQUE,
-    first_name TEXT NOT NULL,
-    last_name  TEXT NOT NULL
+    email     TEXT UNIQUE,
+    full_name TEXT NOT NULL
 );
 
 CREATE TABLE organisations
@@ -31,18 +30,78 @@ CREATE TABLE venues
 
 CREATE TABLE papers
 (
-    id         SERIAL PRIMARY KEY,
-    eprint     TEXT       NOT NULL UNIQUE,
-    doi        TEXT       NOT NULL UNIQUE,
+    id          SERIAL PRIMARY KEY,
+    doi         TEXT UNIQUE,
+    journal_ref TEXT UNIQUE,
 
-    abstract   TEXT,
-    pdf_link   TEXT,
-    title      TEXT       NOT NULL,
-    year       INTEGER,
+    abstract    TEXT,
+    title       TEXT    NOT NULL,
+    year        INTEGER NOT NULL
+);
 
-    created_at timestamptz NOT NULL,
-    updated_at timestamptz,
-    deleted_at timestamptz
+CREATE TABLE eprints
+(
+    id       SERIAL PRIMARY KEY,
+
+    paper_id INTEGER REFERENCES papers (id)
+);
+
+CREATE TABLE eprints_arxiv
+(
+    id             SERIAL PRIMARY KEY,
+    arxiv_id       TEXT        NOT NULL UNIQUE,
+
+    eprint_id      INTEGER REFERENCES eprints (id),
+
+    comment        TEXT,
+    extra          JSONB,
+    latest_version INTEGER DEFAULT 1,
+    pdf_link       TEXT,
+
+    published_at   TIMESTAMPTZ NOT NULL,
+    updated_at     TIMESTAMPTZ
+);
+COMMENT ON COLUMN eprints_arxiv.pdf_link IS 'only if different from arXiv''s default pdf location';
+
+CREATE TABLE arxiv_groups
+(
+    id                        SERIAL PRIMARY KEY,
+
+    original_arxiv_group_name TEXT NOT NULL UNIQUE
+);
+
+CREATE TABLE arxiv_archives
+(
+    id                          SERIAL PRIMARY KEY,
+
+    original_arxiv_archive_code TEXT NOT NULL UNIQUE,
+    original_arxiv_archive_name TEXT NOT NULL,
+
+    arxiv_group_id              INTEGER REFERENCES arxiv_groups (id)
+);
+
+CREATE TABLE arxiv_categories
+(
+    id                                  SERIAL PRIMARY KEY,
+
+    original_arxiv_category_description TEXT,
+    original_arxiv_category_code        TEXT        NOT NULL UNIQUE,
+    original_arxiv_category_name        TEXT        NOT NULL,
+
+    created_at                          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at                          TIMESTAMPTZ,
+
+    arxiv_archive_id                    INTEGER REFERENCES arxiv_archives (id)
+);
+
+CREATE TABLE eptrins_arxiv_arxiv_categories
+(
+    eprint_arxiv_id   INTEGER REFERENCES eprints_arxiv (id),
+    arxiv_category_id INTEGER REFERENCES arxiv_categories (id),
+    PRIMARY KEY (eprint_arxiv_id, arxiv_category_id),
+
+
+    is_primary        BOOLEAN
 );
 
 CREATE TABLE authors_organisations
@@ -54,7 +113,7 @@ CREATE TABLE authors_organisations
 
 CREATE TABLE papers_authors
 (
-    paper_id     INTEGER REFERENCES papers (id),
+    paper_id  INTEGER REFERENCES papers (id),
     author_id INTEGER REFERENCES authors (id),
     PRIMARY KEY (paper_id, author_id)
 );
@@ -72,5 +131,4 @@ CREATE TABLE papers_venues
     venue_id INTEGER REFERENCES venues (id),
     PRIMARY KEY (paper_id, venue_id)
 );
-
 
