@@ -32,7 +32,7 @@ CREATE TABLE papers
 (
     id          SERIAL PRIMARY KEY,
     doi         TEXT UNIQUE,
-    journal_ref TEXT UNIQUE,
+    journal_ref TEXT,
 
     abstract    TEXT,
     title       TEXT    NOT NULL,
