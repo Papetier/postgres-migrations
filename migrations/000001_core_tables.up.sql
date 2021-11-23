@@ -35,7 +35,7 @@ CREATE TABLE papers
     journal_ref TEXT,
 
     abstract    TEXT,
-    title       TEXT    NOT NULL,
+    title       TEXT NOT NULL,
     year        INTEGER
 );
 
@@ -106,9 +106,11 @@ CREATE TABLE authors_organisations
 
 CREATE TABLE papers_authors
 (
-    paper_id  INTEGER REFERENCES papers (id),
-    author_id INTEGER REFERENCES authors (id),
-    PRIMARY KEY (paper_id, author_id)
+    paper_id     INTEGER REFERENCES papers (id),
+    author_id    INTEGER REFERENCES authors (id),
+    PRIMARY KEY (paper_id, author_id),
+
+    author_order SMALLINT
 );
 
 CREATE TABLE papers_publishers
