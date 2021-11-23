@@ -46,7 +46,7 @@ CREATE TABLE eprints
     paper_id INTEGER REFERENCES papers (id)
 );
 
-CREATE TABLE eprints_arxiv
+CREATE TABLE arxiv_eprints
 (
     id             SERIAL PRIMARY KEY,
     arxiv_id       TEXT        NOT NULL UNIQUE,
@@ -61,7 +61,7 @@ CREATE TABLE eprints_arxiv
     published_at   TIMESTAMPTZ NOT NULL,
     updated_at     TIMESTAMPTZ
 );
-COMMENT ON COLUMN eprints_arxiv.pdf_link IS 'only if different from arXiv''s default pdf location';
+COMMENT ON COLUMN arxiv_eprints.pdf_link IS 'only if different from arXiv''s default pdf location';
 
 CREATE TABLE arxiv_groups
 (
@@ -94,11 +94,11 @@ CREATE TABLE arxiv_categories
     arxiv_archive_id                    INTEGER REFERENCES arxiv_archives (id)
 );
 
-CREATE TABLE eptrins_arxiv_arxiv_categories
+CREATE TABLE arxiv_eptrins_arxiv_categories
 (
-    eprint_arxiv_id   INTEGER REFERENCES eprints_arxiv (id),
+    arxiv_eprint_id   INTEGER REFERENCES arxiv_eprints (id),
     arxiv_category_id INTEGER REFERENCES arxiv_categories (id),
-    PRIMARY KEY (eprint_arxiv_id, arxiv_category_id),
+    PRIMARY KEY (arxiv_eprint_id, arxiv_category_id),
 
 
     is_primary        BOOLEAN
