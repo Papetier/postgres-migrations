@@ -3,7 +3,7 @@ CREATE TABLE authors
     id        SERIAL PRIMARY KEY,
 
     email     TEXT UNIQUE,
-    full_name TEXT NOT NULL
+    full_name TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE organisations
@@ -36,7 +36,7 @@ CREATE TABLE papers
 
     abstract    TEXT,
     title       TEXT    NOT NULL,
-    year        INTEGER NOT NULL
+    year        INTEGER
 );
 
 CREATE TABLE arxiv_eprints
