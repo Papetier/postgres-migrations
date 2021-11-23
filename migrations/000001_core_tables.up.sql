@@ -39,19 +39,12 @@ CREATE TABLE papers
     year        INTEGER NOT NULL
 );
 
-CREATE TABLE eprints
-(
-    id       SERIAL PRIMARY KEY,
-
-    paper_id INTEGER REFERENCES papers (id)
-);
-
 CREATE TABLE arxiv_eprints
 (
     id             SERIAL PRIMARY KEY,
     arxiv_id       TEXT        NOT NULL UNIQUE,
 
-    eprint_id      INTEGER REFERENCES eprints (id),
+    paper_id       INTEGER REFERENCES papers (id),
 
     comment        TEXT,
     extra          JSONB,
