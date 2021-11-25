@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE TABLE authors
 (
     id        SERIAL PRIMARY KEY,
@@ -127,3 +129,4 @@ CREATE TABLE papers_venues
     PRIMARY KEY (paper_id, venue_id)
 );
 
+COMMIT;

@@ -1,3 +1,5 @@
+BEGIN;
+
 -- Colly tables
 CREATE TABLE IF NOT EXISTS colly_storage_visited_pages
 (
@@ -27,3 +29,4 @@ VALUES ('arXiv',
         'arxiv.org,export.arxiv.org',
         'http://export.arxiv.org/api/query?id_list=cs/9901002v1%2C0904.2860v1');
 
+COMMIT;
