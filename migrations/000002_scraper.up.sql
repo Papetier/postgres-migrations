@@ -28,7 +28,7 @@ COMMENT ON COLUMN websites.init_url_list IS 'comma-separated list of initial url
 
 INSERT INTO websites(name, category_list, domain_list, init_url_list)
 VALUES ('arXiv',
-        'cs.AI,cs.AR,cs.CC,cs.CE,cs.CG,cs.CL,cs.CR,cs.CV,cs.CY,cs.DB,cs.DC,cs.DL,cs.DM,cs.DS,cs.ET,cs.FL,cs.GL,cs.GR,cs.GT,cs.HC,cs.IR,cs.IT,cs.LG,cs.LO,cs.MA,cs.MM,cs.MS,cs.NA,cs.NE,cs.NI',
+        'cs.AI,cs.AR,cs.CC,cs.CE,cs.CG,cs.CL,cs.CR,cs.CV,cs.CY,cs.DB,cs.DC,cs.DL,cs.DM,cs.DS,cs.ET,cs.FL,cs.GL,cs.GR,cs.GT,cs.HC,cs.IR,cs.IT,cs.LG,cs.LO,cs.MA,cs.MM,cs.MS,cs.NA,cs.NE,cs.NI,cs.OH,cs.OS,cs.PF,cs.PL,cs.RO,cs.SC,cs.SD,cs.SE,cs.SI,cs.SY',
         'arxiv.org,export.arxiv.org',
         '');
 
